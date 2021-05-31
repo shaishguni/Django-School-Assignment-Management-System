@@ -1,0 +1,34 @@
+{% extends 'home/base.html' %}
+{% block title %} All Submmissions {% endblock title %}
+{% block viewsubmissions %} active {% endblock viewsubmissions  %} 
+{% block body %}
+          <table class="table table-striped  table-bordered">
+          <thead>
+            <tr>
+                <th>Sn.o</th>
+                <th>Title</th>
+                <th>Upload</th>
+                <th>Date Created</th>
+                <th>Due date</th>
+                <th>Submissions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for assignment in assignments %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="/assignments/{{ assignment.id }}">{{ assignment.title }}</a></td>
+	            <td>
+	                <a href="/media/{{ assignment.upload }}" target="_blank">
+	                <img width="100" height="100" src="/media/{{ assignment.upload }}" alt="image"></a>
+	            </td>
+                <td>{{ assignment.created_at }}</td>
+                <td>{{ assignment.due_date }}</td>
+                <td><a href="/assignments/{{ assignment.id }}/submissions">{{ assignment.submissions.count }}</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+{% endblock  %}

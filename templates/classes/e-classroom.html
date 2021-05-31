@@ -1,0 +1,69 @@
+{% extends 'home/base.html' %}
+{% block e-class %} active {% endblock e-class %}
+{% block title %} E-Class {% endblock title %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.2/baguetteBox.min.js"></script>
+<div class="nav-tabs-custom">
+    <div id="learning-evaluation-container">
+        <style>
+        .tooltipTemp {
+            position: relative;
+            display: inline-block;
+            /*border-bottom: 1px dotted black; !* If you want dots under the hoverable text *!*/
+        }
+
+        /* Tooltip text */
+        .tooltipTemp .tooltiptextTempLeft {
+            visibility: hidden;
+            width: 300px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            left: 100%;
+            top: -20px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltipTemp:hover .tooltiptextTempLeft {
+            visibility: visible;
+        }
+        </style>
+        <table id="chapters-table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Chapters</th>
+                    <th>Exam / Title / Subject</th>
+                    <th style="width: 30%">Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Percentage</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>mixed chapters</td>
+                    <td>First Terminal Exam / First Term Exam / Social Studies</td>
+                    <td>
+                        <div class="tooltipTemp">
+                            Attempt all the questions. <span class="tooltiptextTempLeft">
+                                Attempt all the questions. </span>
+                        </div>
+                    </td>
+                    <td>2020-10-15 14:00:00</td>
+                    <td>2020-10-15 16:00:00 </td>
+                    <td>
+                        NA </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}

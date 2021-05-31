@@ -1,0 +1,109 @@
+{% extends "home/base.html" %}
+{% block title %}Assignment Management System {% endblock title%}
+{% load static %}
+{% block body %}
+<!-- <div class="container assignment-detail">
+  <div class="row single-assignment">
+    <div class="col s12">
+       <h4> Submission Details </h4>
+    </div>
+    <div class="col s12">
+      <p> Upload: {{ single_submission.upload }} </p> </div>
+    <div class="col s12">
+      <p> Submission Date: {{ single_submission.submitted_at }} </p> 
+    </div>
+    <div class="col s12">
+      <p> Submmitted Assigment: {{ single_submission.assignment.title }} </p> 
+    </div>
+  </div> -->
+<table class="table ">
+    <tbody>
+        <h4 class="mt-2 ml-2">Submmission Detail</h4>
+        <tr>
+            <th> Subject </th>
+            <td> {{single_submission.assignment.user.profile.subject}} </td>
+        </tr>
+        <tr>
+            <th> Deadline </th>
+            <td>{{ single_submission.assignment.due_date }}</td>
+        </tr>
+        <tr>
+            <th> Title </th>
+            <td> {{ single_submission.assignment.title }} </td>
+        </tr>
+        <tr>
+            <th> Submmitted At </th>
+            <td>{{ single_submission.submitted_at }} </td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<form id="assignment-submit-form" enctype="multipart/form-data" method="POST" aaction="{% url 'submission_detail' id=submission_id %}">
+    {% csrf_token %}
+    <h4>Edit Submmission</h4>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="descprition" required id="id_descprition" rows="5" class="form-control">{{single_submission.descprition}}</textarea>
+    </div>
+    <div class="form-group">
+
+        <label>Image/File (jpg,png,pdf) Currently : 
+          {% if '.pdf' == single_submission.extension_sub %} 
+          <a href="/media/{{single_submission.upload}}" target="_blank">
+            <img class="media-object" style="height: 80px; width:70px;max-width: 100%;" src="{% static 'img/pdf.png'  %}" alt="">
+          </a>
+          {% elif single_submission.upload %}
+          <a href="/media/{{single_submission.upload}}" target="_blank"> <img class="media-object" style="height: 80px; width:70px;max-width: 100%;" src="/media/{{single_submission.upload}}" > </a> 
+          {% else %}
+            No files
+          {% endif  %}
+        </label>
+        <!-- {{ submission.upload }} -->
+        <input type="file" class="form-control" id="edit-choose-files" name="upload" data-resize="1080" accept=".jpg,.png,.jpeg,.pdf">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <table id="edit-preview-table" class="table">
+        <thead id="edit-columns">
+            <tr>
+                <td style="width: 100%;"></td>
+            </tr>
+        </thead>
+        <tbody id="edit-previews">
+        </tbody>
+    </table>
+</form>
+<!-- 
+    <div class="modal-content">
+      <h4>Edit Submission</h4>
+      <div class="edit-modal">
+        <div class="modal-container">
+          <form method="POST" action="{% url 'submission_detail' id=submission_id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <div class="file-field input-field col s12">
+                <div class="btn col s6">
+                  <span>File</span>
+                  {{ submission.upload }}
+                </div>
+                <input type="text" name="descprition" value="{{single_submission.descprition}}" required id="id_descprition">
+              </div>
+            </div>
+            <button class="btn waves-effect waves-light modal-action modal-close" type="submit" name="edit-submission">Edit submission
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+  </div> -->
+<form method="POST" action={% url 'delete_submission' id=submission_id %}>
+    {% csrf_token %}
+    <div class="edit-delete">
+        <button class="btn btn-danger" type="submit" name="delete-submission">Delete Submmission
+        </button>
+    </div>
+</form>
+{% endblock %}

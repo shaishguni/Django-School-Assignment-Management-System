@@ -1,0 +1,59 @@
+{% extends "home/base.html" %}
+{% block title %} Assignment Detail{% endblock %}
+{% load static %}
+{% block body %}
+<table class="table">
+    <tbody>
+        <tr>
+            <th> Subject </th>
+            <td> {{assignment.user.profile.subject}} </td>
+        </tr>
+        <tr>
+            <th> Deadline </th>
+            <td> {{ assignment.due_date }} </td>
+        </tr>
+        <tr>
+            <th> Title </th>
+            <td> {{ assignment.title }} </td>
+        </tr>
+        <tr>
+            <th> Description </th>
+            <td>
+                <div style="min-height: 70px;">
+                    {{assignment.descprition}} </div>
+            </td>
+        </tr>
+        <tr>
+            <th> Year </th>
+            <td> {% now "Y" %} </td>
+        </tr>
+        <tr>
+            <th> Files </th>
+
+            <td>
+                {% if assignment.upload %}
+                {% if '.pdf' in assignment.extension_ass %}
+                <a data-caption="" title="Click to preview" target="_blank" class="row pdf" href="/media/{{assignment.upload}}">
+                    <div class="col-sm-5">
+                        <span id="https://veda-app" class="">
+                            <img class="media-object" style="height: 80px; width:70px;max-width: 100%;" src="{% static 'img/pdf.png'  %}" alt="">
+                            <!-- <img class="media-object" src="..." alt="..."> -->
+                        </span>
+                    </div>
+                    <div class="col-sm-7">
+                        <h4 class="media-heading" style="color: #000;"> </h4>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr>
+                    </div>
+                </a>
+                {% else %}
+                <a data-caption="" title="Click to preview" target="_blank" class="row " href="/media/{{assignment.upload}}">
+                    <img class="media-object" style="height: 150px; width:auto; max-width: 100%;" src="/media/{{assignment.upload}}" alt="">
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

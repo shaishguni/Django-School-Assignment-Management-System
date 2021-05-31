@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+{% block title %} Submmissions {% endblock title %}
+{% block submissions %} active {% endblock submissions %}
+{% load static %}
+{% block body %}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">S.no.</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Title</th>
+            <th scope="col">Added Date</th>
+            <th scope="col">Deadline Date</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Remarks</th>
+            <th scope="col">Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for  submissions in submission %}
+        This is file type {{ submissions.extension_sub}}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{submissions.assignment.user.profile.subject}}</td>
+            <td>{{submissions.assignment.title}}</td>
+            <td>{{submissions.assignment.created_at}}</td>
+            <td>{{submissions.assignment.due_date}}</td>
+            <td>{{submissions.grade}}</td>
+            <td>{{submissions.feedback}}</td>
+            <td class=" ">
+                <a href="/assignments/{{submissions.assignment.id}}/detail/" class="btn btn-primary btn-sm view-assignment-detail" style="margin-bottom: 4px;">
+                    Detail
+                </a>
+
+                <a href="/submissions/{{submissions.id}}/edit" class="btn btn-success btn-sm assignment-submit-btn" style="margin-bottom: 4px;">
+                    View/Edit Assignment
+                </a>
+            </td>
+        </tr>	
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+
+<!-- 
+{% for submissions in submission %}
+ {{submissions.assignment.title}}
+{% endfor %} -->

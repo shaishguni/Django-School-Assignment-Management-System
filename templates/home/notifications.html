@@ -1,0 +1,57 @@
+{% extends 'home/base.html' %}
+{% block notifications %} active {% endblock notifications %}
+{% block title %} Notifications {% endblock title %}
+{% block body %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Personal</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Parents Availability</th>
+                    <th>Date</th>
+                </tr>
+                {% for notification in noti_general %}
+                <tr>
+                    <td>{{notification.title}}</td>
+                    <td>{{notification.message}} 
+                    {% if notification.files %}
+                    <a href="{{notification.files.url}}" target="_blank"> <img src="{{notification.files.url}}" alt="..." class="margin" style="width:100px; height: 100px;"></a>
+                    {% endif %}
+
+                    </td>
+                    <td>{{notification.parents_avaviality}}</td>
+                    <td>{{notification.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                </tr>
+                {% for notification in noti %}
+                <tr>
+                    </a>
+                    <td><a href="{{notification.link}}">{{notification.message}}</a></td>
+                    <td><a href="{{notification.link}}">{{notification.created_at}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

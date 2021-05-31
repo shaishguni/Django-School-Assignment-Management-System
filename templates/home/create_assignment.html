@@ -1,0 +1,122 @@
+{% extends "home/base.html" %}
+{% block title %}Assignment Management System{% endblock %}
+{% block Assignments %} active {% endblock Assignments  %} 
+{% block  body %}
+
+<form id="assignment-submit-form" enctype="multipart/form-data" method="POST"  aaction="{% url 'add_assignment'%}">
+  {% csrf_token %}
+    <div class="form-group">
+        <label>Title</label>
+        <input name="title" id="title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Deadline</label>
+        <input type="date" name="due_date" id="due_date" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" id="description" rows="5" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Image/File (jpg,png,pdf)</label>
+        <input multiple="" type="file" class="form-control" id="edit-choose-files" name="upload" data-resize="1080" accept=".jpg,.png,.jpeg,.pdf" >
+    </div>
+
+    
+    <table id="edit-preview-table" class="table">
+        <thead id="edit-columns"><tr><td style="width: 100%;"></td></tr></thead>
+        <tbody id="edit-previews">
+
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<script type="text/javascript">
+    (function(global) {
+        var imagesPerRow = 1,
+            chooseFiles,
+            columns,
+            previews;
+
+        function PreviewImages() {
+            $('#edit-preview-table #edit-previews').html("");
+            $('#edit-preview-table').fadeIn();
+            var row;
+            Array.prototype.forEach.call(chooseFiles.files, function(file, index) {
+                var cindex = index % imagesPerRow,
+                    oFReader = new FileReader(),
+                    cell,
+                    image;
+
+                if (cindex === 0) {
+                    row = previews.insertRow(Math.ceil(index / imagesPerRow));
+                }
+
+                image = document.createElement("img");
+                image.id = "img_" + index;
+                image.style.width = "200px";
+                image.style.height = "auto";
+                cell = row.insertCell(cindex);
+                cell.appendChild(image);
+
+
+
+                cell = row.insertCell(1);
+
+
+
+                oFReader.addEventListener("load", function assignImageSrc(evt) {
+                    image.src = evt.target.result;
+                    this.removeEventListener("load", assignImageSrc);
+                }, false);
+
+                oFReader.readAsDataURL(file);
+            });
+        }
+
+
+        // global.removeEventListener("load", windowLoadHandler);
+        chooseFiles = document.getElementById("edit-choose-files");
+        columns = document.getElementById("edit-columns");
+        previews = document.getElementById("edit-previews");
+
+        var row = columns.insertRow(-1),
+            header,
+            i;
+
+        for (i = 0; i < imagesPerRow; i += 1) {
+            header = row.insertCell(-1);
+            header.style.width = (100 / imagesPerRow) + "%";
+        }
+        chooseFiles.addEventListener("change", PreviewImages, false);
+    }(window));
+
+
+
+
+
+
+
+    function getAssignmentsPage() {
+        var fromDate = $('#from-date').val();
+        var toDate = $('#to-date').val();
+        var filter = $('#filter').val();
+
+        if (fromDate != "" && toDate != "" && filter != "") {
+            reloadTable();
+        }
+    }
+
+    function getNotesPage() {
+        var fromDate = $('#from-date').val();
+        var toDate = $('#to-date').val();
+
+        if (fromDate != "" && toDate != "") {
+            reloadNotesTable();
+        }
+    }
+</script>
+{% endblock %}

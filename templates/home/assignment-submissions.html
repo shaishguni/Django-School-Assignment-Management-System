@@ -1,0 +1,91 @@
+{% extends "home/base.html" %}
+{% block title %} Submmission {% endblock %}
+{% block body %}
+<div>
+    {% if submissions %}
+    <div class="body">
+        <div class="sub-body">
+            <div class="row">
+            </div>
+            <div class="no-assignment">
+                <table class="table-striped table-bordered table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student Name</th>
+                            <th>Upload</th>
+                            <th>Date submitted</th>
+                            <th>Grade</th>
+                            <th>Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for submission in submissions %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ submission.user.first_name }}</td>
+                            {% if submission.upload == '' %}
+                            <td>None</td>
+                            {% else %}
+                            <td>{{ submission.upload }}</td>
+                            {% endif %}
+                            <td>{{ submission.submitted_at }}</td>
+                            <td>
+                                <form method="POST" enctype="multipart/form-data" class="feedback-form">
+                                    {% csrf_token %}
+                                    {% if submission.grade != "No grade yet" %}
+                                    <input class="form-control"  type="number" value="{{submission.grade}}" name="grade" id="id_grade">
+                                    {% else %}
+                                    <input class="form-control"  type="number" name="grade" required id="id_grade">
+                                    {% endif %}
+                                    <button type="submit" class="btn btn-primary mt-1" name="submit-grade" value="{{ submission.id }}">
+                                        <a>Send</a>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+
+                                <form method="POST" enctype="multipart/form-data" class="feedback-form">
+                                    {% csrf_token %}
+                                  {% if submission.feedback != 'No feedback yet' %}
+                                    <input class="form-control"  type="text" value="{{ submission.feedback }}" name="feedback" required id="id_feedback">
+                                  {% else %}
+                                    <input class="form-control"  type="text" name="feedback" required id="id_feedback">
+                                    {% endif %}
+                                    <button class="btn btn-primary mt-1" type="submit" name="submit-feedback" value="{{ submission.id }}">
+                                        <a href="">Send</a>
+                                    </button>
+                                </form>
+                            </td>
+                      
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--     {% for submission in submissions %}
+      <div id="modal-{{ submission.id }}" class="modal">
+        <div class="modal-content">
+          <h4>Grade Submission</h4>
+          <form method="POST" enctype="multipart/form-data" class="feedback-form">
+            {% csrf_token %}
+            {{ grade_form.grade }}
+            <button type="submit" name="submit-grade" value="{{ submission.id }}">
+            </button>
+          </form>
+        </div>
+      </div>
+    {% endfor %} -->
+    {% else %}
+    <div class="body">
+        <div class="sub-body">
+            <div class="no-assignment">
+                <p> No submissions yet </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

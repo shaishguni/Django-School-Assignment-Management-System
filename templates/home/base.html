@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %} {% endblock title %} </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style5.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+
+
+
+
+            <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+
+
+<script src="https://fedora.teachablecdn.com/packs/student-globals-3faedabdba66325171d8.js"></script><script src="https://fedora.teachablecdn.com/packs/student-legacy-0eec22679cb96b9ff0f9.js"></script>
+
+</head>
+{% load mathfilters %}
+
+<body class="bg-white">
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h5>Fluorescent Secondary School</h5>
+            </div>
+            <ul class="list-unstyled components">
+                <li class=" {% block Dashboard %} {% endblock Dashboard  %}   ">
+                    <a href="/home">Dashboard</a>
+                </li>
+                <li class=" {% block Assignments %} {% endblock Assignments  %}   ">
+                    {% if request.user.profile.role == 'Teacher' %}
+                    <a href="/assignments/create/">Add Assignment</a>
+                    {% else %}
+                    <a href="/assignments">Assignment</a>
+                    {% endif %}
+                </li>
+                {% if request.user.profile.role != 'Teacher' %}
+                <li class=" {% block submissions %} {% endblock submissions  %}   ">
+                    <a href="/submissions">Submmissions</a>
+                </li>
+                {% endif %}
+                {% if request.user.profile.role == 'Teacher' %}
+                <li class=" {% block viewsubmissions %} {% endblock viewsubmissions  %}   ">
+                    <a href="/submissions/all/">View Submmission</a>
+                </li>
+                {% endif %}
+                {% if request.user.profile.role == 'Teacher' %}
+                <li class="{% block addnotification %} {% endblock addnotification  %}">
+                    <a href="/assouncement/add/">Add Announcement</a>
+                </li>
+                {% else %}
+                <li class="{% block notifications %}  {% endblock notifications %}">
+                    <a href="/notifications/">Notification {% if count1 or count2 %}
+                        <span style="background: red; color: white;    padding: 3px 7px; border-radius: 10px;" id="total-assignments" class="badge bg-blue"><b>{{ count1.count |add:count2.count }}</b></span>
+                        {% endif %}</a>
+                </li>
+                {% endif %}
+                <li class="{% block Password %} {% endblock Password %}">
+                    <a href="/password/">Change Password</a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- Page Content Holder -->
+        <div id="content">
+            <nav class="navbar  navbar-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn " style="box-shadow: none;" type="button" data-toggle="dropdown">Welcome {{request.user}} <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% for message in messages %}
+            <div style="background-color: none" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Message : </strong><span> {{ message }}</span>
+            </div>
+            {% endfor %}
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+          
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" href="https://ingrails.com/school/admin_panel/css/datatables/dataTables.bootstrap.css">
+
+            {% block body %}
+            {% endblock body %}
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+    });
+    </script>
+    <div>
+    </div>
+</body>
+
+</html>
