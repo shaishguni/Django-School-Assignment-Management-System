@@ -24,8 +24,8 @@
 # To use this Application
 
 <li>pip install virtualenv</li>
-<li>git clone https://github.com/aditya12-coder/Django-School-Assignment-Management-System.git</li>
-<li> cd Django-Blog-Application</li>
+<li>git clone https://github.com/adityapandey217/Django-School-Assignment-Management-System.git</li>
+<li> cd Django-School-Assignment-Management-System</li>
 <li> virtualenv venv</li>
 <li>venv\Scripts\activate</li>
 <li>pip install -r requirements.txt</li>
